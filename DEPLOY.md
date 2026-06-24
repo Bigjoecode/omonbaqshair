@@ -98,13 +98,14 @@ chmod -R 755 assets/uploads storage
 
 Repo → **Settings → Secrets and variables → Actions → New repository secret**:
 
-| Secret        | Value (example)                          |
-|---------------|------------------------------------------|
-| `SSH_HOST`    | `omonblaqshair.com` or the server IP     |
-| `SSH_USER`    | `davidwil`                               |
-| `SSH_PORT`    | `22` (cPanel sometimes uses a custom port)|
-| `DEPLOY_PATH` | `/home/davidwil/omonblaqshair.com`       |
-| `SSH_PRIVATE_KEY` | the **private** key (full contents, see C)|
+| Secret             | Value (example)                              |
+|--------------------|----------------------------------------------|
+| `SSH_HOST`         | `omonblaqshair.com` or the server IP         |
+| `SSH_USER`         | `davidwil`                                   |
+| `SSH_PORT`         | `22` (cPanel sometimes uses a custom port)   |
+| `DEPLOY_PATH`      | `/home/davidwil/omonblaqshair.com`           |
+| `SSH_PRIVATE_KEY`  | the **private** key (full contents, see C)   |
+| `SSH_PASSPHRASE`   | the private key passphrase, if the key has one |
 
 ---
 
