@@ -141,10 +141,17 @@ manually: **Actions → Deploy to live server → Run workflow**.
 If you'd rather not use GitHub Actions:
 
 1. cPanel → **Git™ Version Control → Create**.
-2. Clone URL: `https://github.com/Bigjoecode/omonbaqshair.git`, repository path =
-   your web directory.
-3. The included **`.cpanel.yml`** copies the files into place on each pull.
-4. Pull updates from cPanel (or automate with a GitHub webhook → cPanel "deploy").
+2. If the repo is **public**, use clone URL:
+   `https://github.com/Bigjoecode/omonbaqshair.git`
+3. Repository path: use an **empty sibling folder**, for example:
+   `/home/davidwil/repositories/omonbaqshair`
+   Do **not** point cPanel Git at `/home/davidwil/omonblaqshair.com` if that live
+   folder already contains your site files.
+4. The included **`.cpanel.yml`** publishes the repo into
+   `/home/davidwil/omonblaqshair.com` on each deploy while preserving:
+   `config/config.php`, `assets/uploads/`, and `storage/`.
+5. After each push to GitHub, use cPanel's **Pull or Update from Remote** for that
+   repository. If your host supports cPanel deploy webhooks, you can automate this.
 
 ---
 

@@ -1,10 +1,11 @@
 ---
 deployment:
   tasks:
-    # cPanel Git Version Control runs this on each deploy.
-    # By default the repository is already cloned into the web directory, so we
-    # simply ensure the upload/storage folders exist with the right permissions.
-    # (config/config.php is gitignored and stays untouched.)
+    # cPanel Git Version Control clones this repo into a sibling directory,
+    # then runs these tasks from the repo root on each deploy.
+    # Sync tracked code into the live site while preserving server-only config,
+    # uploads, and runtime storage.
     - export DEPLOYPATH=/home/davidwil/omonblaqshair.com
+    - /usr/bin/rsync -a --delete --exclude='.git/' --exclude='.github/' --exclude='.cpanel.yml' --exclude='.gitattributes' --exclude='.gitignore' --exclude='.agents/' --exclude='.claude/' --exclude='.kilocode/' --exclude='config/config.php' --exclude='assets/uploads/' --exclude='storage/' --exclude='ombh.zip' ./ $DEPLOYPATH/
     - /bin/mkdir -p $DEPLOYPATH/assets/uploads/products $DEPLOYPATH/assets/uploads/pages $DEPLOYPATH/assets/uploads/categories $DEPLOYPATH/storage
     - /bin/chmod -R 755 $DEPLOYPATH/assets/uploads $DEPLOYPATH/storage
