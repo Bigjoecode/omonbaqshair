@@ -104,7 +104,7 @@ Repo → **Settings → Secrets and variables → Actions → New repository sec
 | `SSH_USER`    | `davidwil`                               |
 | `SSH_PORT`    | `22` (cPanel sometimes uses a custom port)|
 | `DEPLOY_PATH` | `/home/davidwil/omonblaqshair.com`       |
-| `SSH_KEY`     | the **private** key (full contents, see C)|
+| `SSH_PRIVATE_KEY` | the **private** key (full contents, see C)|
 
 ---
 
@@ -115,7 +115,7 @@ Repo → **Settings → Secrets and variables → Actions → New repository sec
 ```bash
 # On your computer (or in cPanel Terminal):
 ssh-keygen -t ed25519 -C "github-actions" -f deploy_key -N ""
-#   deploy_key      -> paste into the GitHub secret SSH_KEY (private)
+#   deploy_key      -> paste into the GitHub secret SSH_PRIVATE_KEY (private)
 #   deploy_key.pub  -> add on the server:  cPanel → SSH Access → Manage Keys → Import,
 #                      then **Authorize** it (or append to ~/.ssh/authorized_keys)
 ```
