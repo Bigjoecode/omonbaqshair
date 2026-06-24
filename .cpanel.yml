@@ -1,0 +1,10 @@
+---
+deployment:
+  tasks:
+    # cPanel Git Version Control runs this on each deploy.
+    # By default the repository is already cloned into the web directory, so we
+    # simply ensure the upload/storage folders exist with the right permissions.
+    # (config/config.php is gitignored and stays untouched.)
+    - export DEPLOYPATH=/home/davidwil/omonblaqshair.com
+    - /bin/mkdir -p $DEPLOYPATH/assets/uploads/products $DEPLOYPATH/assets/uploads/pages $DEPLOYPATH/assets/uploads/categories $DEPLOYPATH/storage
+    - /bin/chmod -R 755 $DEPLOYPATH/assets/uploads $DEPLOYPATH/storage

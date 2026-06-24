@@ -1,0 +1,34 @@
+# ---- Secrets (NEVER commit) ----
+/config/config.php
+.env
+.env.*
+
+# Original brief contains mailbox/admin credentials
+/READ.md
+
+# ---- Logs & storage (keep the protective .htaccess only) ----
+/storage/*
+!/storage/.htaccess
+*.log
+
+# ---- Archives / backups / large bundles ----
+*.zip
+*.tar
+*.tar.gz
+/ombh/
+
+# ---- Editor / agent / OS junk ----
+/.claude/
+/.kilocode/
+/.vscode/
+/.idea/
+.DS_Store
+Thumbs.db
+
+# ---- Temp screenshots / scratch ----
+_*.png
+*.tmp
+
+# ---- Dependencies (not used, but safe) ----
+/vendor/
+/node_modules/
