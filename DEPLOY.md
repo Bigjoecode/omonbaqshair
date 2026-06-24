@@ -9,7 +9,53 @@ touch your live DB credentials, SMTP password, or payment keys. Server-uploaded 
 
 ---
 
-## A. One-time server setup (do this once)
+## ⚡ Quick start — PRIVATE repo, in-place (recommended, no downtime)
+
+This adopts git **inside your existing live folder**, so `config/config.php` and all
+uploaded images are kept (git only overwrites tracked code files).
+
+```bash
+# --- 0. SSH into the server (cPanel → Terminal) ---
+cd /home/davidwil/omonblaqshair.com
+
+# --- 1. Safety backup ---
+cd ~ && tar -czf omonblaqshair-backup-$(date +%F).tgz omonblaqshair.com && cd omonblaqshair.com
+
+# --- 2. Create a server deploy key and register it with GitHub ---
+ssh-keygen -t ed25519 -C "omonblaq-deploy" -f ~/.ssh/omonblaq_deploy -N ""
+cat ~/.ssh/omonblaq_deploy.pub
+#   ^ copy this whole line → GitHub → repo → Settings → Deploy keys → Add deploy key
+#     (title: "live server"; leave "Allow write access" UNCHECKED — read-only is enough)
+
+# --- 3. Tell git to use that key for github.com ---
+printf 'Host github.com\n  HostName github.com\n  User git\n  IdentityFile ~/.ssh/omonblaq_deploy\n  IdentitiesOnly yes\n' >> ~/.ssh/config
+chmod 600 ~/.ssh/config ~/.ssh/omonblaq_deploy
+ssh -T git@github.com   # type "yes" to trust the host; "successfully authenticated" = good
+
+# --- 4. Adopt the repo in-place and sync to it ---
+git init
+git remote add origin git@github.com:Bigjoecode/omonbaqshair.git
+git fetch origin
+git reset --hard origin/main          # overwrites tracked CODE only; keeps config.php + uploads
+git branch --set-upstream-to=origin/main main
+
+# --- 5. Make sure config + folders are right ---
+[ -f config/config.php ] || cp config/config.sample.php config/config.php   # then edit it
+mkdir -p assets/uploads/{products,pages,categories} storage
+chmod -R 755 assets/uploads storage
+```
+
+After this, finish **section B** (add the 5 GitHub Actions secrets) and pushes to `main`
+will auto-deploy. To deploy manually any time: `cd /home/davidwil/omonblaqshair.com && git pull`.
+
+> `git reset --hard origin/main` makes the repo the source of truth — any code edited
+> *only* on the live server (not committed) is replaced. From now on, change code via git.
+> `config/config.php` is gitignored and untracked → never touched. Your server-uploaded
+> images are untracked → preserved.
+
+---
+
+## A. (Alternative) One-time server setup — fresh clone
 
 SSH into the server (cPanel → *Terminal*, or an SSH client):
 
